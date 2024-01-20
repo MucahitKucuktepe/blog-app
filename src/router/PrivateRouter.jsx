@@ -1,9 +1,10 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Login from '../pages/Login'
 
 const PrivateRouter = () => {
-  return (
-    <div>PrivateRouter</div>
-  )
+  const user= false
+  return  user ? <Outlet /> : <Login />
 }
 
 export default PrivateRouter
