@@ -58,10 +58,10 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor:"greenyellow"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <BookIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <BookIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1, color:"black"}} />
           <Typography
             variant="h6"
             noWrap
@@ -73,14 +73,14 @@ const ResponsiveAppBar = () => {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "black",
               textDecoration: "none",
             }}
           >
             WARSHIP BLOG
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" },color:"black" }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -111,12 +111,12 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page.page} onClick={()=>handleNavMenu(page.link)}>
-                  <Typography textAlign="center">{page.page}</Typography>
+                  <Typography sx={{color:"black"}} textAlign="center">{page.page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <BookIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <BookIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1,color:"black" }} />
           <Typography
             variant="h5"
             noWrap
@@ -129,7 +129,7 @@ const ResponsiveAppBar = () => {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color:"black",
               textDecoration: "none",
             }}
           >
@@ -145,7 +145,7 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page.page}
                 onClick={()=>handleNavMenu(page.link)}
-                sx={{ my: 2, color: "white", display: "block", px: "4rem" }}
+                sx={{ my: 2, color:"black", display: "block", px: "4rem" }}
               >
                 {page.page}
               </Button>
