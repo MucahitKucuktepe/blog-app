@@ -14,20 +14,14 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import image from "../assets/USS_Gridley_(DDG-101)_2008.jpg";
 import { Container } from "@mui/material";
+import { Formik } from "formik";
+import LoginForm, { loginSchema } from "../components/auth/LoginForm";
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -44,7 +38,7 @@ const Login = () => {
             margin: "auto",
           }}
         >
-          <Container style={{  margin: "auto" }}>
+          <Container style={{ margin: "auto" }}>
             <img src={image} alt="img" style={{ width: "100%" }} />
           </Container>
         </Grid>
@@ -64,57 +58,14 @@ const Login = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
+            <Formik
+              initialValues={{ email: "", password: "" }}
+              validationSchema={loginSchema}
+              onSubmit={(values, actions)=>{
+                console.log(values)
+              }}
+              component={(props) => <LoginForm {...props} />}
+            ></Formik>
           </Box>
         </Grid>
       </Grid>
