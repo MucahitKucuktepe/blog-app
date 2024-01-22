@@ -69,7 +69,7 @@ export const BlogCard = ({
               "&:hover": {
                 backgroundColor: "rgba(0, 255, 0, 0.2)",
                 color: "red",
-              },
+              },   
             }}
           />
         </IconButton>
