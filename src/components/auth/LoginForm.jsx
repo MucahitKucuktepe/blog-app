@@ -37,7 +37,10 @@ export const LoginForm = ({
 }) => {
   return (
     <Form>
-      <Box noValidate sx={{ display: "flex", flexDirection: "column", gap: 2, mt:3 }}>
+      <Box
+        noValidate
+        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}
+      >
         <TextField
           label="Email"
           name="email"
@@ -81,7 +84,7 @@ export const LoginForm = ({
             </Link>
           </Grid>
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link to="/register" variant="body2">
               {"Don't have an account? Sign Up"}
             </Link>
           </Grid>
