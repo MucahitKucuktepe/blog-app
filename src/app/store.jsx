@@ -18,10 +18,11 @@ const persistConfig = {
   storage,
 };
 const persistedReducer = persistReducer(persistConfig, authReducer);
+const persistBlogs= persistReducer(persistConfig, blogReducer)
 const store = configureStore({
   reducer: {
     auth: persistedReducer,
-    blog: blogReducer,
+    blog: persistBlogs,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>

@@ -16,17 +16,8 @@ import AddCommentIcon from "@mui/icons-material/AddComment";
 
 import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import useBlogCalls from "../../hooks/useBlogCalls";
+import { useNavigate } from "react-router-dom";
 
 export const BlogCard = ({
   _id,
@@ -40,14 +31,15 @@ export const BlogCard = ({
   createdAt,
   countOfVisitors,
 }) => {
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const { getBlogsDetail } = useBlogCalls();
+  const handleDetail = (id) => {
+    console.log(id);
+    getBlogsDetail(id);
   };
 
-  const commentsNumber=comments.length
-  const likesNumber=likes.length
+  const commentsNumber = comments.length;
+  const likesNumber = likes.length;
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -72,7 +64,7 @@ export const BlogCard = ({
               "&:hover": {
                 backgroundColor: "rgba(0, 255, 0, 0.2)",
                 color: "red",
-              },   
+              },
             }}
           />
           <span> {likesNumber} </span>
@@ -87,7 +79,7 @@ export const BlogCard = ({
               },
             }}
           />
-        <span>{commentsNumber}</span>
+          <span>{commentsNumber}</span>
         </IconButton>
         <IconButton>
           <VisibilityIcon
@@ -110,7 +102,7 @@ export const BlogCard = ({
             },
           }}
           variant="contained"
-          onClick={handleExpandClick}
+          onClick={() => handleDetail(_id)}
           aria-label="show more"
         >
           READ MORE
