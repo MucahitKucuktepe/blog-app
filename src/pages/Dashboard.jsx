@@ -15,10 +15,11 @@ const Dashboard = () => {
   return (
     <div
       style={{
-        marginTop: "3rem",
+        marginTop: "1rem",
+        marginBottom:"4rem",
         display: "flex",
         justifyContent: "space-around",
-        gap: "2rem",
+        gap: "1rem",
         alignItems: "center",
         flexWrap: "wrap",
       }}

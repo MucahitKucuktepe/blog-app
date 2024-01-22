@@ -14,7 +14,6 @@ const Footer = () => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor:"greenyellow",
-        zIndex:"2"
       }}
     >
       <Typography>Developed By Mücahit</Typography>

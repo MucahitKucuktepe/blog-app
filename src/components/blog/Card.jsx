@@ -46,6 +46,9 @@ export const BlogCard = ({
     setExpanded(!expanded);
   };
 
+  const commentsNumber=comments.length
+  const likesNumber=likes.length
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -72,6 +75,7 @@ export const BlogCard = ({
               },   
             }}
           />
+          <span> {likesNumber} </span>
         </IconButton>
         <IconButton aria-label="share">
           <AddCommentIcon
@@ -83,6 +87,7 @@ export const BlogCard = ({
               },
             }}
           />
+        <span>{commentsNumber}</span>
         </IconButton>
         <IconButton>
           <VisibilityIcon
@@ -93,9 +98,8 @@ export const BlogCard = ({
                 color: "red",
               },
             }}
-          >
-            {countOfVisitors}
-          </VisibilityIcon>
+          />
+          <span>{countOfVisitors}</span>
         </IconButton>
         <Button
           sx={{
