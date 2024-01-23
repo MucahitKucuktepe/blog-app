@@ -11,6 +11,7 @@ import {
   Select,
   Stack,
   TextField,
+  TextareaAutosize,
   Typography,
 } from "@mui/material";
 
@@ -28,6 +29,11 @@ const NewBlog = () => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
   const handleSubmit = () => {};
+  const published = [
+    { id: 1, name: "Please Choose", value: "" },
+    { id: 2, name: "Draft", value: false },
+    { id: 3, name: "Published", value: true },
+  ];
   return (
     <Stack display={"flex"} alignItems={"center"} marginTop={"3rem"}>
       <Paper
@@ -38,7 +44,7 @@ const NewBlog = () => {
           // display: "flex",
           // justifyContent: "center",
           // alignItems: "center",
-          boxShadow: "8px 10px 30px gray",
+          boxShadow: "8px 10px 30px black",
         }}
       >
         <Typography variant="h4" color="gray" mt={4}>
@@ -51,9 +57,9 @@ const NewBlog = () => {
             onSubmit={handleSubmit}
           >
             <TextField
-              label="Firm Name"
-              name="name"
-              id="name"
+              label="Title"
+              name="title"
+              id="title"
               type="text"
               variant="outlined"
               value={info.name}
@@ -61,12 +67,12 @@ const NewBlog = () => {
               required
             />
             <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
+              label="Image URL"
+              name="image"
+              id="image"
+              type="url"
               variant="outlined"
-              value={info.phone}
+              value={info.image}
               onChange={handleChange}
               required
             />
@@ -87,25 +93,34 @@ const NewBlog = () => {
                 ))}
               </Select>
             </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="isPublish">Status</InputLabel>
+              <Select
+                labelId="isPublish"
+                id="isPublish"
+                name="isPublish"
+                value={info.status}
+                label="Please Choose..."
+                onChange={handleChange}
+              >
+                {published.map((item) => (
+                  <MenuItem key={item.id} value={item.value}>
+                    {item.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
-              label="Address"
-              name="address"
-              id="address"
-              type="text"
+              label="Content"
+              name="content"
+              id="content"
+              type="textArea"
               variant="outlined"
-              value={info.address}
+              value={info.content}
               onChange={handleChange}
               required
-            />
-            <TextField
-              label="Image"
-              name="image"
-              id="image"
-              type="url"
-              variant="outlined"
-              value={info.image}
-              onChange={handleChange}
-              required
+              rows={4}
+              multiline
             />
             <Button type="submit" variant="contained" size="large">
               {info._id ? "Update Firm" : "Add Firm"}

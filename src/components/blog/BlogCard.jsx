@@ -50,6 +50,7 @@ export const BlogCard = ({
   // console.log(blogs);
   const blogCardLike = blogs.filter((blog) => blog._id == _id);
   // console.log(blogCardLike[0].likes)
+  console.log(blogCardLike)
   const commentsNumber = comments.length;
   const likesNumber = likes.length;
   const fav = blogCardLike[0].likes;
