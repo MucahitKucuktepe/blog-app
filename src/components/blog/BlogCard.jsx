@@ -18,6 +18,7 @@ import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useNavigate } from "react-router-dom";
+import Detail from "../../pages/Detail";
 
 export const BlogCard = ({
   _id,
@@ -31,11 +32,18 @@ export const BlogCard = ({
   createdAt,
   countOfVisitors,
 }) => {
-
+  const navigate = useNavigate();
   const { getBlogsDetail } = useBlogCalls();
+  React.useEffect(() => {
+  getBlogsDetail(_id)
+  }, [])
+  
+
+
   const handleDetail = (id) => {
     console.log(id);
     getBlogsDetail(id);
+    navigate(`/detail/${id}`);
   };
 
   const commentsNumber = comments.length;

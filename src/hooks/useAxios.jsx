@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 
 const useAxios = () => {
   const { token } = useSelector((state) => state.auth);
+  console.log(token)
   const axiosWithToken = axios.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    author: { Authorization: `Token ${token}` },
+    headers: { Authorization:`Token ${token}` },
   });
 
   const axiosPublic = axios.create({

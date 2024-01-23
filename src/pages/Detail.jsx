@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,27 +14,70 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
 import { Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import CommentCard from "../components/blog/CommentCard";
+import { CommentForm } from "../components/blog/CommentForm";
+import useBlogCalls from "../hooks/useBlogCalls";
+import { CloudDone } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
 const Detail = () => {
-  const {blogsDetail} =useSelector(state=>state.blog)
-  console.log(blogsDetail)
+  const { blogsDetail } = useSelector((state) => state.blog);
+  const { comments, _id } = blogsDetail;
+  const { id } = useParams();
+  console.log(id);
+  const { getBlogsDetail } = useBlogCalls();
+  useEffect(() => {
+    getBlogsDetail(id)
+  }, [])
+  
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <Card sx={{ maxWidth: 600, margin:"auto", marginTop:"2rem" }}>
-     <CardMedia component="img" height="194" image={blogsDetail.image} alt="Paella dish" />
+    <Card
+      sx={{
+        maxWidth: 600,
+        margin: "auto",
+        marginTop: "1rem",
+        marginBottom: "4rem",
+      }}
+    >
+      <CardMedia
+        component="img"
+        height="194"
+        image={blogsDetail?.image}
+        alt="Paella dish"
+      />
       <CardHeader
-        title={blogsDetail.title}
-        subheader={`Published Date:${new Date(blogsDetail.createdAt).toLocaleDateString()}`}
+        title={blogsDetail?.title}
+        subheader={`Published Date:${new Date(
+          blogsDetail?.createdAt
+        ).toLocaleDateString()}`}
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-         
-          </Avatar>
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
         }
       />
-     
+
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {blogsDetail.content}
+          {blogsDetail?.content}
         </Typography>
       </CardContent>
       <CardActions
@@ -53,7 +96,12 @@ const Detail = () => {
           />
           <span> {blogsDetail.likesNumber} </span>
         </IconButton>
-        <IconButton aria-label="share">
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
           <AddCommentIcon
             sx={{
               color: "black",
@@ -63,8 +111,8 @@ const Detail = () => {
               },
             }}
           />
-          <span>{blogsDetail.commentsNumber}</span>
-        </IconButton>
+          <span>{blogsDetail?.commentsNumber}</span>
+        </ExpandMore>
         <IconButton>
           <VisibilityIcon
             sx={{
@@ -91,8 +139,16 @@ const Detail = () => {
           READ MORE
         </Button>
       </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <CommentForm _id={_id} />
+          {comments?.map((item) => (
+            <CommentCard key={item._id} {...item} />
+          ))}
+        </CardContent>
+      </Collapse>
     </Card>
-  )
-}
+  );
+};
 
-export default Detail
+export default Detail;
