@@ -73,7 +73,7 @@ const Login = () => {
           <Container style={{ margin: "auto" }}>
             <img src={image} alt="img" style={{ width: "100%" }} component={Paper} />
           </Container>
-        </Grid>
+        </Grid> 
       </Grid>
     </ThemeProvider>
   );
