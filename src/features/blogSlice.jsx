@@ -45,7 +45,7 @@ export const {
   getBlogsSuccess,
   getBlogsDetailSucces,
   getBlogsLikesDetail,
-  getCategoriesSlice
+  getCategoriesSlice,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;
