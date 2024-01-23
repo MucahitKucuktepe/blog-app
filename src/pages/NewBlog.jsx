@@ -16,19 +16,29 @@ import {
 } from "@mui/material";
 
 const NewBlog = () => {
-  const { getCategories } = useBlogCalls();
+  const { getCategories, postBlog } = useBlogCalls();
   const { categories } = useSelector((state) => state.blog);
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState({
+    title:"",
+    content:"",
+    image:"",
+    categoryId:"",
+    isPublished:""
+  });
   useEffect(() => {
     getCategories();
   }, []);
-  console.log(categories);
+  // console.log(categories);
   const handleChange = (e) => {
     // const { name, value } = e.target
     // setInfo({ ...info, [name]: value })
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(info)
+    postBlog(info)
+  };
   const published = [
     { id: 1, name: "Please Choose", value: "" },
     { id: 2, name: "Draft", value: false },
@@ -62,7 +72,7 @@ const NewBlog = () => {
               id="title"
               type="text"
               variant="outlined"
-              value={info.name}
+              value={info.title || ""}
               onChange={handleChange}
               required
             />
@@ -72,7 +82,7 @@ const NewBlog = () => {
               id="image"
               type="url"
               variant="outlined"
-              value={info.image}
+              value={info.image || ""}
               onChange={handleChange}
               required
             />
@@ -82,24 +92,24 @@ const NewBlog = () => {
                 labelId="categoryId"
                 id="categoryId"
                 name="categoryId"
-                value={info.categoryId}
+                value={info.categoryId || ""}
                 label="Category"
                 onChange={handleChange}
               >
                 {categories.map((item) => (
-                  <MenuItem key={item._id} value={item._id}>
+                  <MenuItem key={item._id} value={item._id || ""}>
                     {item.name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel id="isPublish">Status</InputLabel>
+              <InputLabel id="isPublished">Status</InputLabel>
               <Select
-                labelId="isPublish"
-                id="isPublish"
-                name="isPublish"
-                value={info.status}
+                labelId="isPublished"
+                id="isPublished"
+                name="isPublished"
+                value={info.isPublished}
                 label="Please Choose..."
                 onChange={handleChange}
               >
@@ -116,14 +126,14 @@ const NewBlog = () => {
               id="content"
               type="textArea"
               variant="outlined"
-              value={info.content}
+              value={info.content|| ""}
               onChange={handleChange}
               required
               rows={4}
               multiline
             />
             <Button type="submit" variant="contained" size="large">
-              {info._id ? "Update Firm" : "Add Firm"}
+             ADD BLOG
             </Button>
           </Box>
         </Box>

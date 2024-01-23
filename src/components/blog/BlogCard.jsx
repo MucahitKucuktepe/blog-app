@@ -61,7 +61,7 @@ export const BlogCard = ({
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         title={title}
-        subheader={`PubLİshed Date:${new Date(createdAt).toLocaleDateString()}`}
+        subheader={`Published Date:${new Date(createdAt).toLocaleDateString()}`}
       />
       <CardMedia component="img" height="194" image={image} alt="Paella dish" />
       <CardContent>

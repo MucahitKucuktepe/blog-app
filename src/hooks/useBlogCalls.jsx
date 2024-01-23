@@ -58,11 +58,22 @@ const useBlogCalls = () => {
     getBlogs(1, 10);
   };
   const getCategories = async () => {
+  try {
     const { data } = await axiosPublic.get(`/categories`);
     dispatch(getCategoriesSlice(data))
+  } catch (error) {
+    console.log(error)
+  }
   };
-
-  return { getBlogs, getBlogsDetail, postComments, blogLikes, getCategories };
+const postBlog= async(info)=>{
+  try {
+    const {data}= await axiosWithToken.post(`/blogs/`,info)
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+  return { getBlogs, getBlogsDetail, postComments, blogLikes, getCategories,postBlog };
 };
 
 export default useBlogCalls;
