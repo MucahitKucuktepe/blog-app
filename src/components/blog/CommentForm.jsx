@@ -4,8 +4,12 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import useBlogCalls from "../../hooks/useBlogCalls";
 
-export const CommentForm = ({_id}) => {
+export const CommentForm = ({ _id }) => {
   const { postComments } = useBlogCalls();
+  const emptyForm = {
+    blogId: "",
+    comment: "",
+  };
   const [interpretation, setInterpretation] = React.useState({
     blogId: `${_id}`,
     comment: "",
@@ -14,11 +18,11 @@ export const CommentForm = ({_id}) => {
     setInterpretation({ ...interpretation, comment: e.target.value });
   };
 
-  const handleSubmit=(e)=>{
-    e.preventDefault()
-    postComments(interpretation)
-    console.log(interpretation)
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postComments(interpretation);
+  setInterpretation(emptyForm)
+  };
 
   return (
     <Box
@@ -37,6 +41,7 @@ export const CommentForm = ({_id}) => {
           label="Comment"
           placeholder="Add a comment"
           onChange={handleChange}
+          value={interpretation.comment}
         />
       </div>
       <Button

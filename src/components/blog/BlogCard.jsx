@@ -18,7 +18,6 @@ import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useNavigate } from "react-router-dom";
-import Detail from "../../pages/Detail";
 
 export const BlogCard = ({
   _id,
@@ -31,15 +30,10 @@ export const BlogCard = ({
   title,
   createdAt,
   countOfVisitors,
+  blogLike,
 }) => {
   const navigate = useNavigate();
   const { getBlogsDetail } = useBlogCalls();
-  React.useEffect(() => {
-  getBlogsDetail(_id)
-  }, [])
-  
-
-
   const handleDetail = (id) => {
     console.log(id);
     getBlogsDetail(id);
@@ -65,7 +59,7 @@ export const BlogCard = ({
         disableSpacing
         sx={{ display: "flex", justifyContent: "space-around" }}
       >
-        <IconButton aria-label="add to favorites">
+        <Button aria-label="add to favorites" onClick={() => blogLike(_id)}>
           <FavoriteIcon
             sx={{
               color: "black",
@@ -74,9 +68,12 @@ export const BlogCard = ({
                 color: "red",
               },
             }}
+        
+            // style={fav? {color:"red"}: {color:"black"}}
           />
+
           <span> {likesNumber} </span>
-        </IconButton>
+        </Button>
         <IconButton aria-label="share">
           <AddCommentIcon
             sx={{

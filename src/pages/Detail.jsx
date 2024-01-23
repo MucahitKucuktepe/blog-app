@@ -35,6 +35,7 @@ const ExpandMore = styled((props) => {
 
 const Detail = () => {
   const { blogsDetail } = useSelector((state) => state.blog);
+  console.log(blogsDetail)
   const { comments, _id } = blogsDetail;
   const { id } = useParams();
   console.log(id);
