@@ -54,6 +54,7 @@ const useBlogCalls = () => {
     const { data } = await axiosWithToken.post(`/blogs/${blogId}/postLike`);
     console.log(data);
     dispatch(getBlogsLikesDetail(data));
+    getBlogsDetail(blogId)
     getBlogs(1, 10);
   };
   const getCategories = async () => {

@@ -19,6 +19,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import useBlogCalls from "../../hooks/useBlogCalls";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
+import { useSelector } from "react-redux";
 
 export const BlogCard = ({
   _id,
@@ -33,19 +34,27 @@ export const BlogCard = ({
   countOfVisitors,
   blogLike,
 }) => {
-
   const navigate = useNavigate();
   const { getBlogsDetail } = useBlogCalls();
-  const { axiosWithToken } = useAxios();
+  const { blogs } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
+  const person = user._id;
+  console.log(person);
+
   const handleDetail = (id) => {
     console.log(id);
     getBlogsDetail(id);
     navigate(`/detail/${id}`);
   };
-  
-
+  // console.log(_id)
+  // console.log(blogs);
+  const blogCardLike = blogs.filter((blog) => blog._id == _id);
+  // console.log(blogCardLike[0].likes)
   const commentsNumber = comments.length;
   const likesNumber = likes.length;
+  const fav = blogCardLike[0].likes;
+  console.log(fav);
+
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -67,7 +76,6 @@ export const BlogCard = ({
           aria-label="add to favorites"
           onClick={() => {
             blogLike(_id);
-        
           }}
         >
           <FavoriteIcon
@@ -78,8 +86,7 @@ export const BlogCard = ({
                 color: "red",
               },
             }}
-
-            // style={fav? {color:"red"}: {color:"black"}}
+            style={fav.includes(person) ? { color: "red" } : { color: "black" }}
           />
 
           <span> {likesNumber} </span>

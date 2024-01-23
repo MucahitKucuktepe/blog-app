@@ -34,21 +34,31 @@ const ExpandMore = styled((props) => {
 }));
 
 const Detail = () => {
+  const { getBlogs, blogLikes } = useBlogCalls();
   const { blogsDetail } = useSelector((state) => state.blog);
-  console.log(blogsDetail)
+  console.log(blogsDetail);
   const { comments, _id } = blogsDetail;
   const { id } = useParams();
   console.log(id);
   const { getBlogsDetail } = useBlogCalls();
+  const {user}= useSelector((state)=>state.auth)
+  const person= user._id
+  console.log(person)
   useEffect(() => {
-    getBlogsDetail(id)
-  }, [])
-  
+    getBlogsDetail(id);
+  }, []);
 
+  const blogCardLike = blogsDetail.likes;
+  console.log(blogCardLike);
   const [expanded, setExpanded] = React.useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+  const handleFav = () => {
+    blogLikes(id);
+    getBlogsDetail(id);
+    getBlogs(1, 10);
+
   };
 
   return (
@@ -85,7 +95,7 @@ const Detail = () => {
         disableSpacing
         sx={{ display: "flex", justifyContent: "space-around" }}
       >
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={handleFav}>
           <FavoriteIcon
             sx={{
               color: "black",
@@ -93,7 +103,9 @@ const Detail = () => {
                 backgroundColor: "rgba(0, 255, 0, 0.2)",
                 color: "red",
               },
+             
             }}
+             style={blogCardLike?.includes(person) ? {color:"red"}: {color:"black"}}
           />
           <span> {blogsDetail.likesNumber} </span>
         </IconButton>
