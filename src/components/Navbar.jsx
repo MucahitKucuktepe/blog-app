@@ -15,6 +15,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import BookIcon from "@mui/icons-material/Book";
 import { Bookmark } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useAuthCalls from "../hooks/useAuthCalls";
 
 const pages = [
   {
@@ -30,18 +32,40 @@ const pages = [
     link: "about",
   },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  {
+    page: "login",
+    link: "login",
+  },
+  {
+    page: "My Blogs",
+    link: "myBlogs",
+  },
+  {
+    page: "Profile",
+    link: "profile",
+  },
+  {
+    page: "logout",
+    link: "logout",
+  },
+];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
   const navigate = useNavigate();
   const handleNavMenu = (e) => {
-    navigate(e)
-  //  console.log(e.target.innerText)
-  //  navigate((e.target.innerText).toLowerCase())
+    navigate(e);
+    //  console.log(e.target.innerText)
+    //  navigate((e.target.innerText).toLowerCase())
   };
-
+  const { user } = useSelector((state) => state.auth);
+  const { logOut } = useAuthCalls();
+  console.log(user);
+  const image = user.image;
+  console.log(image);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -58,10 +82,12 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor:"greenyellow"}}>
+    <AppBar position="static" sx={{ backgroundColor: "greenyellow" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <BookIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1, color:"black"}} />
+          <BookIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: "black" }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -80,7 +106,13 @@ const ResponsiveAppBar = () => {
             WARSHIP BLOG
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" },color:"black" }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+              color: "black",
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -110,13 +142,20 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.page} onClick={()=>handleNavMenu(page.link)}>
-                  <Typography sx={{color:"black"}} textAlign="center">{page.page}</Typography>
+                <MenuItem
+                  key={page.page}
+                  onClick={() => handleNavMenu(page.link)}
+                >
+                  <Typography sx={{ color: "black" }} textAlign="center">
+                    {page.page}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <BookIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1,color:"black" }} />
+          <BookIcon
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1, color: "black" }}
+          />
           <Typography
             variant="h5"
             noWrap
@@ -129,7 +168,7 @@ const ResponsiveAppBar = () => {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color:"black",
+              color: "black",
               textDecoration: "none",
             }}
           >
@@ -144,8 +183,8 @@ const ResponsiveAppBar = () => {
             {pages.map((page) => (
               <Button
                 key={page.page}
-                onClick={()=>handleNavMenu(page.link)}
-                sx={{ my: 2, color:"black", display: "block", px: "4rem" }}
+                onClick={() => handleNavMenu(page.link)}
+                sx={{ my: 2, color: "black", display: "block", px: "4rem" }}
               >
                 {page.page}
               </Button>
@@ -155,7 +194,11 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {user ? (
+                  <Avatar alt="user" src={image} />
+                ) : (
+                  <Avatar alt="user" />
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -174,11 +217,52 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {user && (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate("my-blogs");
+                  }}
+                >
+                  My Blogs
+                </MenuItem>
+              )}
+              {user && (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate("profile");
+                  }}
+                >
+                  Profile
+                </MenuItem>
+              )}
+              {user && (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    logOut();
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              )}
+              {!user && (
+                <MenuItem
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate("login");
+                  }}
+                >
+                  Login
+                </MenuItem>
+              )}
+
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
             </Menu>
           </Box>
         </Toolbar>

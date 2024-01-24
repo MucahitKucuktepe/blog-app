@@ -2,7 +2,13 @@ import React from "react";
 import useAxios from "./useAxios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchFail, fetchStart, loginSuccess, registerSuccess } from "../features/authSlice";
+import {
+  fetchFail,
+  fetchStart,
+  loginSuccess,
+  logoutSuccess,
+  registerSuccess,
+} from "../features/authSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const useAuthCalls = () => {
@@ -39,10 +45,23 @@ const useAuthCalls = () => {
       dispatch(fetchFail());
     }
   };
-  
 
+  const logOut = async () => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithToken.get("/auth/logout/");
+      console.log(data);
+      toastSuccessNotify("Logout  Success!");
+      dispatch(logoutSuccess());
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toastErrorNotify("Logout Unsuccess!");
+      dispatch(fetchFail());
+    }
+  };
 
-  return { login,register };
+  return { login, register, logOut };
 };
 
 export default useAuthCalls;

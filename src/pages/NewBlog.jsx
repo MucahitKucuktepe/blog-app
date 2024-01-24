@@ -25,6 +25,9 @@ const NewBlog = () => {
     categoryId: "",
     isPublished: "",
   });
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -50,7 +53,7 @@ const NewBlog = () => {
         elevation={7}
         style={{
           width: "40%",
-          maxWidth:"500px",
+          maxWidth: "500px",
           height: "auto",
           // display: "flex",
           // justifyContent: "center",
@@ -103,11 +106,15 @@ const NewBlog = () => {
               label="Category"
               onChange={handleChange}
             >
-              {categories.map((item) => (
-                <MenuItem key={item._id} value={item._id || ""}>
-                  {item.name}
-                </MenuItem>
-              ))}
+              {categories.map((item) =>
+                user ? (
+                  <MenuItem key={item._id} value={item._id || ""}>
+                    {item.name}
+                  </MenuItem>
+                ) : (
+                  <MenuItem key={item._id}></MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
           <FormControl fullWidth>

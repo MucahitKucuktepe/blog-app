@@ -15,13 +15,16 @@ const authSlice = createSlice({
       state.loading = true;
     },
     loginSuccess: (state, { payload }) => {
-      console.log(payload);
       state.loading = false;
       state.user = payload.user;
       state.token = payload.token;
     },
+    logoutSuccess: (state) => {
+      state.loading = false;
+      state.user = "";
+      state.token = "";
+    },
     registerSuccess: (state, { payload }) => {
-      console.log(payload);
       state.loading = false;
       state.user = payload.data;
       state.token = payload.token;
