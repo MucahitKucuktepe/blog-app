@@ -136,7 +136,7 @@ const ResponsiveAppBar = () => {
                 horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              // onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
               }}
@@ -144,7 +144,10 @@ const ResponsiveAppBar = () => {
               {pages.map((page) => (
                 <MenuItem
                   key={page.page}
-                  onClick={() => handleNavMenu(page.link)}
+                  onClick={() =>{
+                    handleNavMenu(page.link)
+                    handleCloseNavMenu()
+                  }}
                 >
                   <Typography sx={{ color: "black" }} textAlign="center">
                     {page.page}
