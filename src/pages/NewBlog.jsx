@@ -23,7 +23,7 @@ const NewBlog = () => {
     content: "",
     image: "",
     categoryId: "",
-    isPublished: "",
+    isPublish: "",
   });
   const { user } = useSelector((state) => state.auth);
   console.log(user);
@@ -118,12 +118,12 @@ const NewBlog = () => {
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="isPublished">Status</InputLabel>
+            <InputLabel id="isPublish">Status</InputLabel>
             <Select
-              labelId="isPublished"
-              id="isPublished"
-              name="isPublished"
-              value={info.isPublished}
+              labelId="isPublish"
+              id="isPublish"
+              name="isPublish"
+              value={info.isPublish}
               label="Please Choose..."
               onChange={handleChange}
             >

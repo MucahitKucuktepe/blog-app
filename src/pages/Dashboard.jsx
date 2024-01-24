@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { blogs } = useSelector((state) => state.blog);
   console.log(blogs);
   useEffect(() => {
-    getBlogs(1, 10);
+    getBlogs(1, 25);
   }, []);
   const blogLike = (id) => {
     blogLikes(id);
