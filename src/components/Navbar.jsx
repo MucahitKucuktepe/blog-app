@@ -63,9 +63,9 @@ const ResponsiveAppBar = () => {
   };
   const { user } = useSelector((state) => state.auth);
   const { logOut } = useAuthCalls();
-  console.log(user);
+  // console.log(user);
   const image = user.image;
-  console.log(image);
+  // console.log(image);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

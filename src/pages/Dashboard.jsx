@@ -5,11 +5,12 @@ import { BlogCard, Card } from "../components/blog/BlogCard";
 import { Stack } from "@mui/material";
 
 const Dashboard = () => {
-  const { getBlogs, blogLikes } = useBlogCalls();
+  const { getBlogs, blogLikes, getBlogsTotal } = useBlogCalls();
   const { blogs } = useSelector((state) => state.blog);
   console.log(blogs);
   useEffect(() => {
-    getBlogs(1, 25);
+    getBlogs(1, 15);
+
   }, []);
   const blogLike = (id) => {
     blogLikes(id);

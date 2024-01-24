@@ -8,9 +8,12 @@ import {
   getBlogsDetailSucces,
   getBlogsLikesDetail,
   getCategoriesSlice,
-  getUserBlogsSuccess
+  getUserBlogsSuccess,
+  getBlogsTotalRecord,
+  deleteBlogSucces
 } from "../features/blogSlice";
 import { useNavigate } from "react-router-dom";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const useBlogCalls = () => {
   const dispatch = useDispatch();
@@ -19,15 +22,18 @@ const useBlogCalls = () => {
   const getBlogs = async (page, limit) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosPublic.get(
+      const  data  = await axiosPublic.get(
         `/blogs/?page=${page}&limit=${limit}`
       );
-      dispatch(getBlogsSuccess(data));
+      dispatch(getBlogsSuccess(data.data));
+  
     } catch (error) {
       console.log(error);
       dispatch(fetchFail());
     }
   };
+
+
 
   const getBlogsDetail = async (id) => {
     dispatch(fetchStart());
@@ -86,6 +92,19 @@ const useBlogCalls = () => {
       dispatch(fetchFail());
     }
   };
+  const deleteBlog = async (blogId) => {
+    try {
+      const { data } = await axiosWithToken.delete(`/blogs/${blogId}`);
+      console.log(data);
+      // dispatch(deleteBlogSucces())
+      toastSuccessNotify("Delete Blog Success!")
+      getBlogs(1, 10);
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getBlogs,
     getBlogsDetail,
@@ -94,6 +113,7 @@ const useBlogCalls = () => {
     getCategories,
     postBlog,
     getUserBlogs,
+    deleteBlog
   };
 };
 

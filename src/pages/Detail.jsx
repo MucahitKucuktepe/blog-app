@@ -34,22 +34,24 @@ const ExpandMore = styled((props) => {
 }));
 
 const Detail = () => {
-  const { getBlogs, blogLikes } = useBlogCalls();
+  const { getBlogs, blogLikes, deleteBlog } = useBlogCalls();
   const { blogsDetail } = useSelector((state) => state.blog);
   console.log(blogsDetail);
-  const { comments, _id } = blogsDetail;
+  const { comments, _id, userId } = blogsDetail;
   const { id } = useParams();
-  console.log(id);
+  // console.log(id); //? blog detail id
   const { getBlogsDetail } = useBlogCalls();
-  const {user}= useSelector((state)=>state.auth)
-  const person= user._id
-  console.log(person)
+  const author = userId?._id;
+  const { user } = useSelector((state) => state.auth);
+  console.log(author);
+  const person = user?._id;
+  console.log(person);
   useEffect(() => {
     getBlogsDetail(id);
   }, []);
 
   const blogCardLike = blogsDetail.likes;
-  console.log(blogCardLike);
+  // console.log(blogCardLike);
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -58,7 +60,6 @@ const Detail = () => {
     blogLikes(id);
     getBlogsDetail(id);
     getBlogs(1, 10);
-
   };
 
   return (
@@ -103,9 +104,12 @@ const Detail = () => {
                 backgroundColor: "rgba(0, 255, 0, 0.2)",
                 color: "red",
               },
-             
             }}
-             style={blogCardLike?.includes(person) ? {color:"red"}: {color:"black"}}
+            style={
+              blogCardLike?.includes(person)
+                ? { color: "red" }
+                : { color: "black" }
+            }
           />
           <span> {blogsDetail.likesNumber} </span>
         </IconButton>
@@ -138,19 +142,7 @@ const Detail = () => {
           />
           <span>{blogsDetail.countOfVisitors}</span>
         </IconButton>
-        <Button
-          sx={{
-            color: "white",
-            "&:hover": {
-              backgroundColor: "rgba(0, 255, 0, 0.2)",
-              color: "red",
-            },
-          }}
-          variant="contained"
-          aria-label="show more"
-        >
-          READ MORE
-        </Button>
+     
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -160,6 +152,39 @@ const Detail = () => {
           ))}
         </CardContent>
       </Collapse>
+      {person == author && (
+          <div style={{display:"flex", gap:"3rem", justifyContent:"flex-end", margin:"1rem"}}>
+            {" "}
+            <Button
+              sx={{
+                color: "white",
+                backgroundColor: "green",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 255, 0, 0.2)",
+                  color: "red",
+                },
+              }}
+              variant="contained"
+              
+            >
+              UPDATE BLOG
+            </Button>
+            <Button
+              sx={{
+                color: "white",
+                backgroundColor: "red",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 255, 0, 0.2)",
+                  color: "red",
+                },
+              }}
+              variant="contained"
+              onClick={()=>deleteBlog(id)}
+            >
+              DELETE BLOG
+            </Button>
+          </div>
+        )}
     </Card>
   );
 };

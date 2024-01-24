@@ -18,13 +18,14 @@ import {
 const NewBlog = () => {
   const { getCategories, postBlog } = useBlogCalls();
   const { categories } = useSelector((state) => state.blog);
-  const [info, setInfo] = useState({
+  const initialState = {
     title: "",
     content: "",
     image: "",
     categoryId: "",
     isPublish: "",
-  });
+  };
+  const [info, setInfo] = useState(initialState);
   const { user } = useSelector((state) => state.auth);
   console.log(user);
 
@@ -41,6 +42,7 @@ const NewBlog = () => {
     e.preventDefault();
     console.log(info);
     postBlog(info);
+    setInfo(initialState)
   };
   const published = [
     { id: 1, name: "Please Choose", value: "" },
