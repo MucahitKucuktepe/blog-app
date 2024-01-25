@@ -21,6 +21,8 @@ import { CommentForm } from "../components/blog/CommentForm";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { CloudDone } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
+import { DeleteModal } from "../components/blog/DeleteModal";
+import { UpdateModal } from "../components/blog/UpdateModal";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,18 +36,34 @@ const ExpandMore = styled((props) => {
 }));
 
 const Detail = () => {
-  const { getBlogs, blogLikes, deleteBlog } = useBlogCalls();
+  //? MODAL KISMININ STATELERİ
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  //???????????????????????????????????????????????????????????????????
+
+  //! UPDATE MODAL KISMININ STATELERİ
+  const [openUpdate, setOpenUpdate] = React.useState(false);
+  const handleOpenUpdate = () => setOpenUpdate(true);
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const { getBlogs, blogLikes } = useBlogCalls();
   const { blogsDetail } = useSelector((state) => state.blog);
-  console.log(blogsDetail);
-  const { comments, _id, userId } = blogsDetail;
+  // console.log(blogsDetail);
+  const {
+    comments,
+    _id,
+    userId,
+  } = blogsDetail;
+
+ 
+  
   const { id } = useParams();
   // console.log(id); //? blog detail id
   const { getBlogsDetail } = useBlogCalls();
   const author = userId?._id;
   const { user } = useSelector((state) => state.auth);
-  console.log(author);
+  // console.log(author);
   const person = user?._id;
-  console.log(person);
+  // console.log(person);
   useEffect(() => {
     getBlogsDetail(id);
   }, []);
@@ -61,7 +79,7 @@ const Detail = () => {
     getBlogsDetail(id);
     getBlogs(1, 10);
   };
-
+ 
   return (
     <Card
       sx={{
@@ -142,7 +160,6 @@ const Detail = () => {
           />
           <span>{blogsDetail.countOfVisitors}</span>
         </IconButton>
-     
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -153,38 +170,52 @@ const Detail = () => {
         </CardContent>
       </Collapse>
       {person == author && (
-          <div style={{display:"flex", gap:"3rem", justifyContent:"flex-end", margin:"1rem"}}>
-            {" "}
-            <Button
-              sx={{
-                color: "white",
-                backgroundColor: "green",
-                "&:hover": {
-                  backgroundColor: "rgba(0, 255, 0, 0.2)",
-                  color: "red",
-                },
-              }}
-              variant="contained"
-              
-            >
-              UPDATE BLOG
-            </Button>
-            <Button
-              sx={{
-                color: "white",
-                backgroundColor: "red",
-                "&:hover": {
-                  backgroundColor: "rgba(0, 255, 0, 0.2)",
-                  color: "red",
-                },
-              }}
-              variant="contained"
-              onClick={()=>deleteBlog(id)}
-            >
-              DELETE BLOG
-            </Button>
-          </div>
-        )}
+        <div
+          style={{
+            display: "flex",
+            gap: "3rem",
+            justifyContent: "flex-end",
+            margin: "1rem",
+          }}
+        >
+          {" "}
+          <Button
+            sx={{
+              color: "white",
+              backgroundColor: "green",
+              "&:hover": {
+                backgroundColor: "rgba(0, 255, 0, 0.2)",
+                color: "red",
+              },
+            }}
+            variant="contained"
+            onClick={handleOpenUpdate}
+          >
+            UPDATE BLOG
+          </Button>
+          <Button
+            sx={{
+              color: "white",
+              backgroundColor: "red",
+              "&:hover": {
+                backgroundColor: "rgba(0, 255, 0, 0.2)",
+                color: "red",
+              },
+            }}
+            variant="contained"
+            // onClick={()=>deleteBlog(id)}
+            onClick={handleOpen}
+          >
+            DELETE BLOG
+          </Button>
+          <DeleteModal open={open} setOpen={setOpen} id={id} />
+          <UpdateModal
+            open={openUpdate}
+            setOpen={setOpenUpdate}
+            id={id}
+          />
+        </div>
+      )}
     </Card>
   );
 };
