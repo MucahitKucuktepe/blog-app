@@ -6,17 +6,18 @@ import { Stack } from "@mui/material";
 
 const Dashboard = () => {
   const { getBlogs, blogLikes, getBlogsTotal } = useBlogCalls();
-  const { blogs } = useSelector((state) => state.blog);
+  const { blogs, currentPage,totalPages } = useSelector((state) => state.blog);
   console.log(blogs);
   useEffect(() => {
-    getBlogs(1, 15);
+    getBlogs(2, 4);
 
   }, []);
   const blogLike = (id) => {
     blogLikes(id);
-    getBlogs(1, 10);
-
+    getBlogs(1, 4);
   };
+  console.log(currentPage)
+  console.log(totalPages)
   return (
     <div
       style={{

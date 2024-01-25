@@ -23,7 +23,10 @@ const blogSlice = createSlice({
     getBlogsSuccess: (state, action) => {
       console.log(action.payload);
       state.blogs = action.payload.data;
+      state.currentPage=action.payload.details.pages.current
+      state.totalPages=action.payload.details.pages.total
     },
+    
 
     getBlogsDetailSucces: (state, action) => {
       state.blogsDetail = action.payload.data;

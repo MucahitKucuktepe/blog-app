@@ -46,7 +46,7 @@ export const UpdateModal = ({
   const { blogsDetail } = useSelector((state) => state.blog);
 
 
-  console.log(blogsDetail);
+//   console.log(blogsDetail);
   const handleCloseUpdate = () => {
     setOpen(false);
   };

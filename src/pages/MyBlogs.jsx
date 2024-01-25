@@ -7,17 +7,18 @@ import { UserBlogCard } from "../components/blog/UserBlogCard";
 
 const MyBlogs = () => {
   const { getBlogs, blogLikes, getUserBlogs } = useBlogCalls();
-  const { blogs, userBlogs} = useSelector((state) => state.blog);
-  const {user}= useSelector(state=>state.auth)
- const userId=user._id
- console.log(userId)
+  const { blogs, userBlogs } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
+  const userId = user._id;
+  console.log(userId);
   useEffect(() => {
     getUserBlogs(userId);
   }, []);
   const blogLike = (id) => {
     blogLikes(id);
-    getBlogs(1, 10);
 
+    getUserBlogs(userId);
+    getBlogs(1, 10);
   };
   return (
     <div

@@ -76,6 +76,7 @@ const useBlogCalls = () => {
     try {
       const { data } = await axiosWithToken.post(`/blogs/`, info);
       console.log(data);
+      toastSuccessNotify("Post Blog Success!")
     } catch (error) {
       console.log(error);
     }
