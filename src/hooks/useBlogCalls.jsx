@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useAxios from "./useAxios";
 import {
   fetchFail,
@@ -15,7 +15,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
+
 const useBlogCalls = () => {
+  const { user } = useSelector((state) => state.auth);
+  const { currentPage} = useSelector((state) => state.blog);
+  const userId = user._id;
   const dispatch = useDispatch();
   const { axiosWithToken, axiosPublic } = useAxios();
   const navigate = useNavigate();
@@ -61,8 +65,9 @@ const useBlogCalls = () => {
     const { data } = await axiosWithToken.post(`/blogs/${blogId}/postLike`);
     console.log(data);
     dispatch(getBlogsLikesDetail(data));
+    getUserBlogs(userId); // My blogs sayfasında like yaptığımda çalışması için yazdım
     getBlogsDetail(blogId);
-    getBlogs(1, 10);
+    getBlogs(currentPage, 5);
   };
   const getCategories = async () => {
     try {

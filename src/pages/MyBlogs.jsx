@@ -16,9 +16,8 @@ const MyBlogs = () => {
   }, []);
   const blogLike = (id) => {
     blogLikes(id);
-
     getUserBlogs(userId);
-    getBlogs(1, 10);
+    // getBlogs(1, 10);
   };
   return (
     <div
