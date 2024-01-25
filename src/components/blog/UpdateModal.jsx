@@ -28,32 +28,27 @@ const style = {
   p: 1,
 };
 
-export const UpdateModal = ({ open, setOpen, id }) => {
-  const { getBlogsDetail } = useBlogCalls();
+export const UpdateModal = ({
+  info,
+  setInfo,
+  open,
+  setOpen,
+  id,
+  emptyState,
+}) => {
+  const { getBlogsDetail, updateBlog } = useBlogCalls();
 
   React.useEffect(() => {
     getBlogsDetail(id);
+    getCategories();
+
   }, []);
   const { blogsDetail } = useSelector((state) => state.blog);
-  const { _id, userId, categoryId, title, content, image, isPublish } =
-    blogsDetail;
-    console.log(categoryId._id)
-    console.log(isPublish)
-  const initialState = {
-    _id: _id,
-    userId: userId._id,
-    categoryId: categoryId._id,
-    title: title,
-    content: content,
-    image: image,
-    isPublish:isPublish,
-  };
-  const [info, setInfo] = React.useState(initialState);
+
 
   console.log(blogsDetail);
   const handleCloseUpdate = () => {
     setOpen(false);
-    setInfo(initialState);
   };
   const { getCategories, postBlog } = useBlogCalls();
   const { categories } = useSelector((state) => state.blog);
@@ -61,9 +56,6 @@ export const UpdateModal = ({ open, setOpen, id }) => {
   const { user } = useSelector((state) => state.auth);
   //   console.log(user);
 
-  React.useEffect(() => {
-    getCategories();
-  }, []);
   // console.log(categories);
   const handleChange = (e) => {
     // const { name, value } = e.target
@@ -73,6 +65,7 @@ export const UpdateModal = ({ open, setOpen, id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(info);
+    updateBlog(id, info);
   };
   const published = [
     { id: 1, name: "Please Choose", value: "" },
@@ -176,8 +169,13 @@ export const UpdateModal = ({ open, setOpen, id }) => {
                 rows={4}
                 multiline
               />
-              <Button type="submit" variant="contained" size="large">
-                ADD BLOG
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                style={{ backgroundColor: "green" }}
+              >
+                UPDATE BLOG
               </Button>
             </Box>
           </Stack>

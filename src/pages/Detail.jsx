@@ -36,6 +36,26 @@ const ExpandMore = styled((props) => {
 }));
 
 const Detail = () => {
+  const { id } = useParams();
+  // console.log(id); //? blog detail id
+  const { getBlogsDetail } = useBlogCalls();
+  useEffect(() => {
+    getBlogsDetail(id);
+  }, []);
+
+const {blogsDetail}= useSelector(state=>state.blog)
+  const {
+    _id,
+    userId,
+    categoryId,
+    title,
+    content,
+    image,
+    isPublish,
+    comments,
+  } = blogsDetail;
+
+
   //? MODAL KISMININ STATELERİ
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -44,29 +64,36 @@ const Detail = () => {
   //! UPDATE MODAL KISMININ STATELERİ
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const handleOpenUpdate = () => setOpenUpdate(true);
+  const emptyState = {
+    _id: "",
+    userId: "",
+    categoryId: "",
+    title: "",
+    content: "",
+    image: "",
+    isPublish: "",
+  };
+  const initialState = {
+    _id: _id,
+    userId: userId?._id,
+    categoryId: categoryId?._id,
+    title: title,
+    content: content,
+    image: image,
+    isPublish: isPublish,
+  };
+  const [info, setInfo] = React.useState(emptyState);
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const { getBlogs, blogLikes } = useBlogCalls();
-  const { blogsDetail } = useSelector((state) => state.blog);
-  // console.log(blogsDetail);
-  const {
-    comments,
-    _id,
-    userId,
-  } = blogsDetail;
 
- 
-  
-  const { id } = useParams();
-  // console.log(id); //? blog detail id
-  const { getBlogsDetail } = useBlogCalls();
+  // console.log(blogsDetail);
+
   const author = userId?._id;
+
   const { user } = useSelector((state) => state.auth);
   // console.log(author);
   const person = user?._id;
   // console.log(person);
-  useEffect(() => {
-    getBlogsDetail(id);
-  }, []);
 
   const blogCardLike = blogsDetail.likes;
   // console.log(blogCardLike);
@@ -79,7 +106,7 @@ const Detail = () => {
     getBlogsDetail(id);
     getBlogs(1, 10);
   };
- 
+
   return (
     <Card
       sx={{
@@ -189,7 +216,10 @@ const Detail = () => {
               },
             }}
             variant="contained"
-            onClick={handleOpenUpdate}
+            onClick={()=>{
+              handleOpenUpdate()
+              setInfo(initialState)
+            }}
           >
             UPDATE BLOG
           </Button>
@@ -213,6 +243,9 @@ const Detail = () => {
             open={openUpdate}
             setOpen={setOpenUpdate}
             id={id}
+            info={info}
+            setInfo={setInfo}
+            emptyState={emptyState}
           />
         </div>
       )}

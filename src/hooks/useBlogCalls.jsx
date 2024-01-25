@@ -105,6 +105,20 @@ const useBlogCalls = () => {
     }
   };
 
+  const updateBlog = async (blogId,info) => {
+    try {
+      const { data } = await axiosWithToken.put(`/blogs/${blogId}`,info);
+      // console.log(data);
+      // dispatch(deleteBlogSucces())
+      toastSuccessNotify("Update Blog Success!")
+      getBlogs(1, 16);
+      navigate("/")
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   return {
     getBlogs,
     getBlogsDetail,
@@ -113,7 +127,8 @@ const useBlogCalls = () => {
     getCategories,
     postBlog,
     getUserBlogs,
-    deleteBlog
+    deleteBlog,
+    updateBlog
   };
 };
 
