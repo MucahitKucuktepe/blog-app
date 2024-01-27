@@ -20,14 +20,23 @@ const defaultTheme = createTheme();
 
 const Login = () => {
   const { login } = useAuthCalls();
-  const {user}=useSelector(state=>state.auth)
-  console.log(user)
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: "100vh", gap:"1px" }}>
+      <Grid container component="main" sx={{ height: "100vh", gap: "1px" }}>
         <CssBaseline />
-     
-        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square sx={{margin: "auto",}}>
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={6}
+          component={Paper}
+          elevation={6}
+          square
+          sx={{ margin: "auto" }}
+        >
           <Box
             sx={{
               my: 8,
@@ -35,7 +44,6 @@ const Login = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -71,9 +79,14 @@ const Login = () => {
           }}
         >
           <Container style={{ margin: "auto" }}>
-            <img src={image} alt="img" style={{ width: "100%" }} component={Paper} />
+            <img
+              src={image}
+              alt="img"
+              style={{ width: "100%" }}
+              component={Paper}
+            />
           </Container>
-        </Grid> 
+        </Grid>
       </Grid>
     </ThemeProvider>
   );
