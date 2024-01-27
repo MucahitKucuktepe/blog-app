@@ -55,11 +55,35 @@ const About = () => {
                 boxShadow: "2px 5px 20px red",
               }}
             />
-            <h1 style={{display:"flex", flexWrap:"wrap", textAlign: "center", padding: "1rem" }}>
+            <h1
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
               {userName}{" "}
             </h1>
-            <h2 style={{display:"flex", flexWrap:"wrap", textAlign: "center", padding: "1rem" }}> {email} </h2>
-            <h1 style={{display:"flex", flexWrap:"wrap", textAlign: "center", padding: "1rem" }}>
+            <h2
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
+              {" "}
+              {email}{" "}
+            </h2>
+            <h1
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
               {biography}
             </h1>
           </div>

@@ -44,6 +44,7 @@ const Detail = () => {
   }, []);
 
 const {blogsDetail}= useSelector(state=>state.blog)
+console.log(blogsDetail)
   const {
     _id,
     userId,
