@@ -128,7 +128,7 @@ const ResponsiveAppBar = () => {
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left",
+                horizontal: "left",                                                                                                                                                             
               }}
               keepMounted
               transformOrigin={{
@@ -142,7 +142,7 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem
+                <MenuItem                                                                                                                           
                   key={page.page}
                   onClick={() =>{
                     handleNavMenu(page.link)
