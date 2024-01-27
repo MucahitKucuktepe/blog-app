@@ -201,7 +201,8 @@ const {blogsDetail}= useSelector(state=>state.blog)
           style={{
             display: "flex",
             gap: "3rem",
-            justifyContent: "flex-end",
+            justifyContent: "center",
+            alignItems:"center",
             margin: "1rem",
           }}
         >
