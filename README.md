@@ -2,7 +2,7 @@
 
 
 
-![Blog App](blogapp1.gif)
+![Blog App](blogapp.gif)
 
 ## Demo
 
