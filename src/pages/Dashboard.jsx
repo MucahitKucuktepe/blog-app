@@ -8,18 +8,22 @@ const Dashboard = () => {
   let page = 0;
   const { getBlogs, blogLikes, getBlogsTotal } = useBlogCalls();
   const { blogs, currentPage, totalPages } = useSelector((state) => state.blog);
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   console.log(blogs);
   useEffect(() => {
     getBlogs(1, 5);
   }, []);
+  {
+  }
   const blogLike = (id) => {
-    blogLikes(id);
+    user && blogLikes(id); // Kullanıcı girişi olmadan like yapılmasını önledim
     getBlogs(currentPage, 5);
   };
   console.log(currentPage);
   console.log(totalPages);
-  const handleClick = (e,page) => {
-    getBlogs(page, 5)
+  const handleClick = (e, page) => {
+    getBlogs(page, 5);
     console.log(`Şu anki sayfa: ${page}`);
   };
   return (
@@ -46,7 +50,6 @@ const Dashboard = () => {
           display: "flex",
           alignItems: "center",
         }}
-
       >
         <Pagination
           count={Number(totalPages)}
