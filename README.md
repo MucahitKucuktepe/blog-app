@@ -29,7 +29,7 @@ This project is a culmination of extensive planning, meticulous development, and
 
 ![Blog App](blogapp.gif)
 
-## Demo
+## LİVE
 
-[Milestone Blog App](https://mucahitmehmet-blogapp.netlify.app/)
+[Blog App](https://mucahitmehmet-blogapp.netlify.app/)
 
